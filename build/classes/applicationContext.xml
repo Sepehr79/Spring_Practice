@@ -6,22 +6,156 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans  
                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">  
   
-    <bean id="address" class="com.home.Address">
-        <constructor-arg value="isfahan"></constructor-arg>
-        <constructor-arg value="sharif"></constructor-arg>
-        <constructor-arg value="iran"></constructor-arg>
-    </bean>
-    
-    <bean id="studentbean" class="com.home.Student">  
-        <property name="name" value="Sepehr mollaei"></property>  
-    </bean>  
-  
-    <bean id="emp" class="com.home.Employee">
-        <constructor-arg value="10" type="int"></constructor-arg>
-        <constructor-arg value="sepehr mollaei" type="String"></constructor-arg>
-        <constructor-arg>
-            <ref bean="address"></ref>
-        </constructor-arg>
-    </bean>
+         
+        
+         
+     <!-- ***********************Injection by constructor************************** -->
+     
+     <!-- people -->
+     <bean id="person" class="beans.Person">
+     	<constructor-arg value="sepehr"></constructor-arg>
+     	<constructor-arg value="mollaei"></constructor-arg>
+     	<constructor-arg value="20" type="int"></constructor-arg>
+     	<constructor-arg>
+     		<ref bean="country"></ref>
+     	</constructor-arg>
+     </bean>
+     <bean id="person1" class="beans.Person">
+     	<constructor-arg value="parham"></constructor-arg>
+     	<constructor-arg value="kabiri"></constructor-arg>
+     	<constructor-arg value="20" type="int"></constructor-arg>
+     	<constructor-arg>
+     		<ref bean="country"></ref>
+     	</constructor-arg>
+     </bean>
+     <bean id="person2" class="beans.Person">
+     	<constructor-arg value="ahmad"></constructor-arg>
+     	<constructor-arg value="salimi"></constructor-arg>
+     	<constructor-arg value="20" type="int"></constructor-arg>
+     	<constructor-arg>
+     		<ref bean="country"></ref>
+     	</constructor-arg>
+     </bean>
+      
+     
+     <!-- Countries -->
+     <bean id="country" class="beans.Country">
+     	<constructor-arg value="iran"></constructor-arg>
+     	<constructor-arg value="asia"></constructor-arg>
+     	<constructor-arg value="98" type="int"></constructor-arg>
+     	<constructor-arg>
+     		<list>
+     			<value>isfahan</value>
+     			<value>tehran</value>
+     			<value>mashhad</value>
+     			<value>tabriz</value>
+     			<value>shiraz</value>
+     		</list>
+     	</constructor-arg>
+     </bean>
+     
+      <!-- Companies -->
+     <bean id="company" class="beans.Company">
+     	<constructor-arg value="venis"></constructor-arg>
+     	<constructor-arg>
+     		<list>
+     			<ref bean="person"></ref>
+     			<ref bean="person1"></ref>
+     			<ref bean="person2"></ref>
+     		</list>
+     	</constructor-arg>
+     	<constructor-arg>
+     		<map>
+     			<entry key="admin" value="1234"></entry>
+     			<entry key="admin2" value="s134"></entry>
+     		</map>
+     		<!-- we use key-ref and value-ref to define map with classes -->
+     	</constructor-arg>
+     </bean>
+     
+     <!-- inheritance -->
+     <bean id="father" class="beans.Person">
+     	<constructor-arg value="hosein"></constructor-arg>
+     	<constructor-arg value="mollaei"></constructor-arg>
+     	<constructor-arg value="20" type="int"></constructor-arg>
+     </bean>
+     <bean id="child" class="beans.Person" parent="father">
+     	<constructor-arg>
+     		<ref bean="country"/>
+     	</constructor-arg>
+     </bean>
+     
+     <!-- ***********************Injection by setters************************** -->
+     <bean id="setterPerson" class="beans.Person">
+     	<property name="name">
+     		<value>sepehr</value>
+     	</property>
+     	<property name="lastName">
+     		<value>mollaei</value>
+     	</property>
+     	<property name="age">
+     		<value type="int">20</value>
+     	</property>
+     	<property name="country" ref="country"></property>
+     </bean>
+     
+     <bean id="usa" class="beans.Country">
+     	<property name="name" value="USA"></property>
+     	<property name="continent" value="America"></property>
+     	<property name="countryCode">
+     		<value type="int">12</value>
+     	</property>
+     	<property name="cities">
+     		<list>
+     			<value>New York</value>
+     			<value>California</value>
+     			<value>Illinois</value>
+     			<value>Texas</value>
+     			<!-- we can also use <red bean=""/> -->
+     		</list>
+     	</property>
+     </bean>
+     
+     <bean id="venus" class="beans.Company">
+     	<property name="name" value="venus"></property>
+     	<property name="userPass">
+     		<map>
+     			<entry key="admin" value="1234"></entry>
+     			<entry key="admin2" value="123ssqw4"></entry>
+     			<entry key="admin3" value="12s34"></entry>
+     			<!-- also we can use key-ref and value-ref -->
+     		</map>
+     	</property>
+     </bean>
+     
+     <!-- *****************************Autowiring in Spring******************************* -->
+     <!-- Autowiring Modes
+     
+    	/no
+    	
+    	/byName
+    	
+    	/byType
+    	 	
+      	/constructor
+      	
+      	note that It can't be used for primitive and string values.
+     -->
+     <bean id="kamran" class="beans.Person" autowire="byName">
+     	<property name="name" value="kamran"></property>
+     	<property name="lastName" value="karami"></property>
+     	<property name="age" value="35"></property>
+     	<!-- no need to inject country -->
+     </bean>
+     
+     
+     <!-- *****************************Factory Method in Spring******************************** -->
+     <bean id="std" class="beans.Student" factory-method="getInstance"></bean>
+     
+     <!--
+        
+     -->
+     
+     
     
 </beans>  
