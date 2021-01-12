@@ -11,7 +11,7 @@ import beans.Student;
 public class Main {
 	public static void main(String[] args) {
 		
-		System.out.println("fuuuuuuck");
+		
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		Person person = (Person) context.getBean("person");
